@@ -1,0 +1,48 @@
+@import "_reset"
+@import "_variables"
+@import "_fonts"
+
+body
+  font-size: 16px
+  line-height: 1.2
+
+#sidebar
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  width: $sidebar-width
+  background-color: $lighter-blue
+  header
+    position: absolute
+    top: 0
+    right: 0
+    left: 0
+    padding: 6px 12px//TODO convert to ems
+    box-sizing: border-box
+    background-color: $dark-gray
+    font-size: 6em
+    h1
+      @include euphoria
+      text-align: center
+      color: $yellow// Fallback
+      background: -webkit-linear-gradient(lighten($yellow, 20%), $yellow)
+      -webkit-background-clip: text
+      -webkit-text-fill-color: transparent
+      text-shadow: 0 1px 1px hsla(0, 0%,0%,0.15)
+
+#whiteboard
+  position: absolute
+  top: 0
+  right: $sidebar-width
+  bottom: 0
+  left: 0
+  background-color: $light-gray
+  color: $dark-gray
+  @include daniel
+  .editable
+    position: absolute
+    overflow: hidden
+    &:focus, &.creating
+      outline: 0
+      background-color: transparentize($yellow, 0.9)
