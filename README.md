@@ -4,4 +4,4 @@ Scribbli is digital scratch paper for developers.
 
 ## TODOs
 
-* Make the editables moveable and resizeable.
+* Make the model aware of its text value.

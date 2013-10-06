@@ -1,8 +1,9 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone) {
+  'backbone',
+  'config'
+], function($, _, Backbone, CONFIG) {
 
   var Editable = Backbone.View.extend({
 
@@ -32,12 +33,63 @@ define([
     },
 
     events: {
-      'mousedown': 'select',
-      'mouseup': 'select'
+      'mousedown': 'mousedownHandler',
+      'mousemove': 'mousemoveHandler',
+      'mouseup': 'mouseupHandler'
     },
 
-    select: function(e) {
+    getX: function(e) {
+      return e.pageX - this.$el.offset().left;
+    },
+
+    getY: function(e) {
+      return e.pageY - this.$el.offset().top;
+    },
+
+    isResizeHit: function(e) {
+      return this.$el.width() - this.getX(e) <= CONFIG.resizeHandleSize && this.$el.height() - this.getY(e) <= CONFIG.resizeHandleSize;
+    },
+
+    mousedownHandler: function(e) {
       e.stopPropagation();
+      if(this.isResizeHit(e)) {
+        this.resizing = true;
+        this.resizeOffsetX = this.$el.width() - this.getX(e);
+        this.resizeOffsetY = this.$el.height() - this.getY(e);
+      } else {
+        this.moving = true;
+        this.moveOffsetX = this.getX(e);
+        this.moveOffsetY = this.getY(e);
+      }
+    },
+
+    mousemoveHandler: function(e) {
+      if(this.resizing) {
+        this.resize(e);
+      }
+      else if(this.moving) {
+        this.move(e);
+      }
+    },
+
+    mouseupHandler: function(e) {
+      e.stopPropagation();
+      this.resizing = false;
+      this.moving = false;
+    },
+
+    resize: function(e) {
+      this.model.updateSize(
+        e.pageX + this.resizeOffsetX,
+        e.pageY + this.resizeOffsetY
+      );
+    },
+
+    move: function(e) {
+      this.model.set({
+        x: e.pageX - this.moveOffsetX,
+        y: e.pageY - this.moveOffsetY
+      });
     }
 
   });
