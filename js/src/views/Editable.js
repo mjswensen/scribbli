@@ -47,7 +47,8 @@ define([
     },
 
     isResizeHit: function(e) {
-      return this.$el.width() - this.getX(e) <= CONFIG.resizeHandleSize && this.$el.height() - this.getY(e) <= CONFIG.resizeHandleSize;
+      return this.$el.width() - this.getX(e) <= CONFIG.resizeHandleSize &&
+        this.$el.height() - this.getY(e) <= CONFIG.resizeHandleSize;
     },
 
     mousedownHandler: function(e) {
@@ -86,9 +87,13 @@ define([
     },
 
     move: function(e) {
+      var newX = e.pageX - this.moveOffsetX,
+        newY = e.pageY - this.moveOffsetY,
+        maxX = this.options.parentView.$el.width() - this.model.get('width'),
+        maxY = this.options.parentView.$el.height() - this.model.get('height');
       this.model.set({
-        x: e.pageX - this.moveOffsetX,
-        y: e.pageY - this.moveOffsetY
+        x: Math.min(Math.max(newX, 0), maxX),
+        y: Math.min(Math.max(newY, 0), maxY)
       });
     }
 

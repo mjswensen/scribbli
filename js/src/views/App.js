@@ -82,7 +82,7 @@ define([
         width: CONFIG.editableMinWidth,
         height: CONFIG.editableMinHeight
       });
-      var view = new EditableView({ model: model });
+      var view = new EditableView({ model: model, parentView: this });
       model.view = view;
       view.render(this.$el);
       return model;
