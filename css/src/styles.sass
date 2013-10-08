@@ -14,10 +14,6 @@ body
   width: $sidebar-width
   background-color: $lighter-blue
   header
-    position: absolute
-    top: 0
-    right: 0
-    left: 0
     padding: 6px 12px//TODO convert to ems
     box-sizing: border-box
     background-color: $dark-gray
@@ -30,6 +26,19 @@ body
       -webkit-background-clip: text
       -webkit-text-fill-color: transparent
       text-shadow: 0 1px 1px hsla(0, 0%,0%,0.15)
+  .shortcut
+    @include roboto
+    padding: 10px
+    .combination
+      .key
+        padding: 2px 4px
+        border: 1px solid #101010
+        border-radius: 3px
+        background-color: #222
+        color: #ddd
+        box-shadow: inset 0 1px 1px hsla(0, 0%, 100%, 0.1), 0 1px 2px hsla(0, 0%, 0%, 0.5)
+    .description
+      float: right
 
 #whiteboard
   position: absolute
@@ -42,7 +51,6 @@ body
   @include daniel
   .editable
     position: absolute
-    overflow: hidden
     &:focus, &.creating
       outline: 0
       background-color: transparentize($yellow, 0.9)
