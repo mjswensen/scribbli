@@ -4,8 +4,10 @@ define([
   'backbone',
   'config',
   'models/Editable',
-  'views/Editable'
-], function($, _, Backbone, CONFIG, Editable, EditableView) {
+  'views/Editable',
+  'models/Path',
+  'views/Path'
+], function($, _, Backbone, CONFIG, Editable, EditableView, Path, PathView) {
 
   var App = Backbone.View.extend({
 
@@ -13,8 +15,13 @@ define([
 
     initialize: function() {
       this.offset = this.$el.offset();
-      this.leftPressed = false;
-      this.rightPressed = false;
+      this.svg = this.$('svg');
+      this.setSvgViewbox();
+      // TODO: Call this.setSvgViewbox on window.resize
+    },
+
+    setSvgViewbox: function() {
+      this.svg.attr('viewbox', '0 0 ' + this.svg.width() + ' ' + this.svg.height());
     },
 
     events: {
@@ -24,43 +31,36 @@ define([
     },
 
     mousedownHandler: function(e) {
-      this.mouseDown = true;
-      switch (e.which) {
-        case 1:// Left click
-          this.editable = this.createNewEditable(e);
-          break;
-        case 3:// Right click
-          // TODO
-          break;
-        default:
-          return;
+      this.captureEventState(e);
+      if(this.altKey) {
+        this.path = this.createNewPath(e);
+      } else {
+        this.editable = this.createNewEditable(e);
       }
     },
 
     mousemoveHandler: function(e) {
       if(this.mouseDown) {
-        switch (e.which) {
-          case 1:// Left click
-            this.updateEditableSize(e);
-            break;
-          default:
-            return;
+        if(this.altKey) {
+          this.path.addPoint(this.getX(e), this.getY(e));
+        } else {
+          this.editable.updateSize(this.getX(e), this.getY(e));
         }
       }
     },
 
     mouseupHandler: function(e) {
-      this.mouseDown = false;
-      switch (e.which) {
-        case 1:// Left click
-          this.editable.view.$el.removeClass('creating').focus();
-          break;
-        case 2:
-          // TODO
-          break
-        default:
-          return;
+      this.captureEventState(e);
+      if(this.editable) {
+        this.editable.view.$el.removeClass('creating').focus();
       }
+      this.editable = null;
+      this.path = null;
+    },
+
+    captureEventState: function(e) {
+      this.mouseDown = e.type == 'mousedown' || e.type == 'mousemove';
+      this.altKey = e.altKey;
     },
 
     getX: function(e) {
@@ -71,10 +71,6 @@ define([
       return e.pageY - this.offset.top;
     },
 
-    updateEditableSize: function(e) {
-      this.editable.updateSize(this.getX(e), this.getY(e));
-    },
-
     createNewEditable: function(e) {
       var model = new Editable({
         x: this.getX(e),
@@ -83,8 +79,19 @@ define([
         height: CONFIG.editableMinHeight
       });
       var view = new EditableView({ model: model, parentView: this });
-      model.view = view;
-      view.render(this.$el);
+      view.render(this.$el);// TODO: use parentView insead?
+      return model;
+    },
+
+    createNewPath: function(e) {
+      var model = new Path({
+        points: [{
+          x: this.getX(e),
+          y: this.getY(e)
+        }]
+      });
+      var view = new PathView({ model: model, svg: this.$('svg').get(0) });
+      view.render();
       return model;
     }
 

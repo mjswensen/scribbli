@@ -12,7 +12,7 @@ define([
     attributes: {'contenteditable': true},
 
     initialize: function() {
-      this.listenTo(this.model, "change", this.setCss);
+      this.listenTo(this.model, 'change', this.setCss);
     },
 
     render: function(parent) {
@@ -65,16 +65,17 @@ define([
     },
 
     mousemoveHandler: function(e) {
-      if(this.resizing) {
-        this.resize(e);
-      }
-      else if(this.moving) {
-        this.move(e);
+      if(!this.options.parentView.mouseDown) {
+        if(this.resizing) {
+          this.resize(e);
+        }
+        else if(this.moving) {
+          this.move(e);
+        }
       }
     },
 
     mouseupHandler: function(e) {
-      e.stopPropagation();
       this.resizing = false;
       this.moving = false;
     },
