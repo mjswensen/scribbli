@@ -80,6 +80,7 @@ define([
       });
       var view = new EditableView({ model: model, parentView: this });
       view.render(this.$el);// TODO: use parentView insead?
+      model.view = view;
       return model;
     },
 

@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'config'
-], function($, _, Backbone, CONFIG) {
+  'config',
+  'utils/KeyCodes'
+], function($, _, Backbone, CONFIG, KeyCodes) {
 
   var Editable = Backbone.View.extend({
 
@@ -27,7 +28,9 @@ define([
         top: this.model.get('y'),
         left: this.model.get('x'),
         width: this.model.get('width'),
-        height: this.model.get('height')
+        height: this.model.get('height'),
+        '-webkit-transform': 'rotate(' + (this.model.get('rotation') || 0) + 'deg)',
+        transform: 'rotate(' + (this.model.get('rotation') || 0) + ')'
       });
       return true;
     },
@@ -35,7 +38,8 @@ define([
     events: {
       'mousedown': 'mousedownHandler',
       'mousemove': 'mousemoveHandler',
-      'mouseup': 'mouseupHandler'
+      'mouseup': 'mouseupHandler',
+      'keydown': 'keydownHandler'
     },
 
     getX: function(e) {
@@ -78,6 +82,16 @@ define([
     mouseupHandler: function(e) {
       this.resizing = false;
       this.moving = false;
+    },
+
+    keydownHandler: function(e) {
+      if(e.ctrlKey) {
+        if(e.keyCode == KeyCodes.R) {
+          this.model.set({
+            rotation: (this.model.get('rotation') || 0) + 15 * (e.shiftKey ? -1 : 1)
+          });
+        }
+      }
     },
 
     resize: function(e) {

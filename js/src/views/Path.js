@@ -17,7 +17,7 @@ define([
         dataAttr;
       if(!this.path) {
         this.path = document.createElementNS(svgns, 'path');
-        this.path.setAttributeNS(null, 'stroke', 'black');// TODO: color
+        this.path.setAttributeNS(null, 'stroke', '#2B3D4F');
         this.path.setAttributeNS(null, 'fill', 'none');
         this.options.svg.appendChild(this.path);
       }
