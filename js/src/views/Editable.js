@@ -30,7 +30,8 @@ define([
         width: this.model.get('width'),
         height: this.model.get('height'),
         '-webkit-transform': 'rotate(' + (this.model.get('rotation') || 0) + 'deg)',
-        transform: 'rotate(' + (this.model.get('rotation') || 0) + ')'
+        transform: 'rotate(' + (this.model.get('rotation') || 0) + ')',
+        'font-size': (this.model.get('fontSize') || 1) + 'em'
       });
       return true;
     },
@@ -86,10 +87,17 @@ define([
 
     keydownHandler: function(e) {
       if(e.ctrlKey) {
-        if(e.keyCode == KeyCodes.R) {
-          this.model.set({
-            rotation: (this.model.get('rotation') || 0) + 15 * (e.shiftKey ? -1 : 1)
-          });
+        switch(e.keyCode) {
+          case KeyCodes.R:
+            this.model.set({
+              rotation: (this.model.get('rotation') || 0) + 15 * (e.shiftKey ? -1 : 1)
+            });
+            break;
+          case KeyCodes.F:
+            this.model.set({
+              fontSize: (this.model.get('fontSize') || 1) * (e.shiftKey ? 0.75 : 1/0.75)
+            });
+            break;
         }
       }
     },
