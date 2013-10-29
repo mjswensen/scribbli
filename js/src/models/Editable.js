@@ -7,6 +7,13 @@ define([
 
   var Editable = Backbone.Model.extend({
 
+    initialize: function() {
+      this.set({
+        rotation: 0,
+        fontSize: 1
+      });
+    },
+
     updateSize: function(x, y) {
       this.set({
         width: Math.max(CONFIG.editableMinWidth, x - this.get('x')),

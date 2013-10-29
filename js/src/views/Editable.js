@@ -29,9 +29,10 @@ define([
         left: this.model.get('x'),
         width: this.model.get('width'),
         height: this.model.get('height'),
-        '-webkit-transform': 'rotate(' + (this.model.get('rotation') || 0) + 'deg)',
-        transform: 'rotate(' + (this.model.get('rotation') || 0) + ')',
-        'font-size': (this.model.get('fontSize') || 1) + 'em'
+        '-moz-transform': 'rotate(' + this.model.get('rotation') + 'deg)',
+        '-webkit-transform': 'rotate(' + this.model.get('rotation') + 'deg)',
+        transform: 'rotate(' + this.model.get('rotation') + ')',
+        'font-size': this.model.get('fontSize') + 'em'
       });
       return true;
     },
@@ -90,12 +91,12 @@ define([
         switch(e.keyCode) {
           case KeyCodes.R:
             this.model.set({
-              rotation: (this.model.get('rotation') || 0) + 15 * (e.shiftKey ? -1 : 1)
+              rotation: this.model.get('rotation') + 15 * (e.shiftKey ? -1 : 1)
             });
             break;
           case KeyCodes.F:
             this.model.set({
-              fontSize: (this.model.get('fontSize') || 1) * (e.shiftKey ? 0.75 : 1/0.75)
+              fontSize: this.model.get('fontSize') * (e.shiftKey ? 0.75 : 1/0.75)
             });
             break;
         }
