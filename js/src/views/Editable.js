@@ -44,11 +44,11 @@ define([
     },
 
     getX: function(e) {
-      return e.pageX - this.$el.offset().left;
+      return e.pageX - this.model.get('x');
     },
 
     getY: function(e) {
-      return e.pageY - this.$el.offset().top;
+      return e.pageY - this.model.get('y');
     },
 
     isResizeHit: function(e) {
@@ -110,13 +110,9 @@ define([
     },
 
     move: function(e) {
-      var newX = e.pageX - this.moveOffsetX,
-        newY = e.pageY - this.moveOffsetY,
-        maxX = this.options.parentView.$el.width() - this.model.get('width'),
-        maxY = this.options.parentView.$el.height() - this.model.get('height');
       this.model.set({
-        x: Math.min(Math.max(newX, 0), maxX),
-        y: Math.min(Math.max(newY, 0), maxY)
+        x: e.pageX - this.moveOffsetX,
+        y: e.pageY - this.moveOffsetY
       });
     }
 
