@@ -13,35 +13,60 @@ define([
     attributes: {'contenteditable': true},
 
     initialize: function() {
-      this.listenTo(this.model, 'change', this.setCss);
+      this.listenTo(this.model, 'change:x', this.setPosition);
+      this.listenTo(this.model, 'change:y', this.setPosition);
+      this.listenTo(this.model, 'change:width', this.setSize);
+      this.listenTo(this.model, 'change:height', this.setSize);
+      this.listenTo(this.model, 'change:rotation', this.setRotation);
+      this.listenTo(this.model, 'change:fontSize', this.setFontSize);
     },
 
     render: function(parent) {
-      if(this.setCss()) {
-        parent.append(this.$el);
-      }
+      this.setCss();
+      parent.append(this.$el);
+    },
+
+    setPosition: function() {
+      this.$el.css({
+        left: this.model.get('x'),
+        top: this.model.get('y')
+      });
+    },
+
+    setSize: function() {
+      this.$el.css({
+        width: this.model.get('width'),
+        height: this.model.get('height')
+      });
+    },
+
+    setRotation: function() {
+      this.$el.css({
+        '-moz-transform': 'rotate(' + this.model.get('rotation') + 'deg)',
+        '-webkit-transform': 'rotate(' + this.model.get('rotation') + 'deg)',
+        transform: 'rotate(' + this.model.get('rotation') + ')'
+      });
+    },
+
+    setFontSize: function() {
+      this.$el.css({
+        'font-size': this.model.get('fontSize') + 'em'
+      });
     },
 
     setCss: function() {
-      if(!this.model) return false;
-      this.$el.css({
-        top: this.model.get('y'),
-        left: this.model.get('x'),
-        width: this.model.get('width'),
-        height: this.model.get('height'),
-        '-moz-transform': 'rotate(' + this.model.get('rotation') + 'deg)',
-        '-webkit-transform': 'rotate(' + this.model.get('rotation') + 'deg)',
-        transform: 'rotate(' + this.model.get('rotation') + ')',
-        'font-size': this.model.get('fontSize') + 'em'
-      });
-      return true;
+      this.setPosition();
+      this.setSize();
+      this.setRotation();
+      this.setFontSize();
     },
 
     events: {
       'mousedown': 'mousedownHandler',
       'mousemove': 'mousemoveHandler',
       'mouseup': 'mouseupHandler',
-      'keydown': 'keydownHandler'
+      'keydown': 'keydownHandler',
+      'keyup': 'keyupHandler'
     },
 
     getX: function(e) {
@@ -101,6 +126,12 @@ define([
             break;
         }
       }
+    },
+
+    keyupHandler: function(e) {
+      this.model.set({
+        content: this.$el.html()
+      });
     },
 
     resize: function(e) {

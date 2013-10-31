@@ -6,8 +6,9 @@ define([
   'models/Editable',
   'views/Editable',
   'models/Path',
-  'views/Path'
-], function($, _, Backbone, CONFIG, Editable, EditableView, Path, PathView) {
+  'views/Path',
+  'models/App'
+], function($, _, Backbone, CONFIG, Editable, EditableView, Path, PathView, AppModel) {
 
   var App = Backbone.View.extend({
 
@@ -18,6 +19,7 @@ define([
       this.svg = this.$('svg');
       this.setSvgViewbox();
       // TODO: Call this.setSvgViewbox on window.resize
+      this.model = new AppModel();
     },
 
     setSvgViewbox: function() {
@@ -81,6 +83,7 @@ define([
       var view = new EditableView({ model: model, parentView: this });
       view.render(this.$el);// TODO: use parentView insead?
       model.view = view;
+      this.model.editables.add(model);
       return model;
     },
 
@@ -93,6 +96,7 @@ define([
       });
       var view = new PathView({ model: model, svg: this.$('svg').get(0) });
       view.render();
+      this.model.paths.add(model);
       return model;
     }
 

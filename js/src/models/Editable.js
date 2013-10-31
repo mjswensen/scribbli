@@ -10,7 +10,8 @@ define([
     initialize: function() {
       this.set({
         rotation: 0,
-        fontSize: 1
+        fontSize: 1,
+        content: ''
       });
     },
 
