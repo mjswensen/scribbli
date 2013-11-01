@@ -7,12 +7,10 @@ define([
 
   var Editable = Backbone.Model.extend({
 
-    initialize: function() {
-      this.set({
-        rotation: 0,
-        fontSize: 1,
-        content: ''
-      });
+    defaults: {
+      rotation: 0,
+      fontSize: 1,
+      content: ''
     },
 
     updateSize: function(x, y) {
