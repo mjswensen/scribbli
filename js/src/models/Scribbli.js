@@ -7,7 +7,7 @@ define([
   'collections/Paths'
 ], function($, _, Backbone, Debounce, Editables, Paths) {
 
-  var App = Backbone.Model.extend({
+  var Scribbli = Backbone.Model.extend({
 
     initialize: function() {
       this.currentId = Math.random().toString(36).substr(2,5);
@@ -28,6 +28,6 @@ define([
 
   });
 
-  return App;
+  return Scribbli;
 
 });
