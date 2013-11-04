@@ -22,6 +22,21 @@ define([
       this.model = new ScribbliModel();
     },
 
+    render: function() {
+      // Render editables
+      _.forEach(this.model.get('editables'), function(editable) {
+        var view = new EditableView({ model: editable, parentView: this });
+        editable.view = view;
+        view.render(this.$el);// TODO: use parentView instead? Yes.
+      }, this);
+      // Render paths
+      _.forEach(this.model.get('paths'), function(path) {
+        var view = new PathView({ model: path, svg: this.$('svg').get(0) });
+        path.view = view;
+        view.render();
+      }, this);
+    },
+
     setSvgViewbox: function() {
       this.svg.attr('viewbox', '0 0 ' + this.svg.width() + ' ' + this.svg.height());
     },
@@ -83,7 +98,7 @@ define([
       var view = new EditableView({ model: model, parentView: this });
       view.render(this.$el);// TODO: use parentView insead?
       model.view = view;
-      this.model.editables.add(model);
+      this.model.get('editables').add(model);
       return model;
     },
 
@@ -96,7 +111,7 @@ define([
       });
       var view = new PathView({ model: model, svg: this.$('svg').get(0) });
       view.render();
-      this.model.paths.add(model);
+      this.model.get('paths').add(model);
       return model;
     }
 
