@@ -11,7 +11,6 @@ define([
   var App = Backbone.Model.extend({
 
     defaults: {
-      currentScribbli: new Scribbli(),
       scribblies: new Scribblies()
     },
 
@@ -22,7 +21,12 @@ define([
         this.get('scribblies').unshift(this.scribbliFromKey(key));
       }
 
-      this.get('scribblies').unshift(this.get('currentScribbli'));
+      if(!this.get('scribblies').length) {
+        this.set({ currentScribbli: new Scribbli() });
+        this.get('scribblies').unshift(this.get('currentScribbli'));
+      } else {
+        this.set({ currentScribbli: this.get('scribblies').at(0) });
+      }
 
       this.set({
         scribbliView: new ScribbliView({ app: this })
@@ -47,6 +51,14 @@ define([
     },
 
     chooseScribbli: function(scribbli) {
+      this.set({ currentScribbli: scribbli });
+      this.get('scribbliView').render();
+      this.get('scribbliListView').render();
+    },
+
+    newScribbli: function() {
+      var scribbli = new Scribbli();
+      this.get('scribblies').unshift(scribbli);
       this.set({ currentScribbli: scribbli });
       this.get('scribbliView').render();
       this.get('scribbliListView').render();

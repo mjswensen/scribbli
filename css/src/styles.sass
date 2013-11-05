@@ -47,6 +47,20 @@ body
     background-color: $light-blue
     max-height: 200px
     overflow-y: scroll
+    .new-scribbli// TODO: a lot of duplicate styles here
+      padding: 10px//TODO: atomicize things like this
+      font-size: 0.75em
+      background-color: transparentize($dark-gray, 0.75)
+      color: $light-gray
+      border: 2px dashed $dark-gray
+      margin-bottom: 2px
+      border-radius: 2px
+      -webkit-transition: all 0.1s ease
+      trasition: all 0.1s ease
+      &:hover
+        cursor: pointer
+        border-color: $light-gray
+        color: $yellow
     .scribbli
       padding: 10px
       font-size: 0.75em
@@ -58,7 +72,7 @@ body
       trasition: all 0.1s ease
       &.selected
         background-color: $yellow
-        color: white
+        color: $dark-gray
       &:hover:not(.selected)
         cursor: pointer
         background-color: $light-gray

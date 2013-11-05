@@ -14,7 +14,7 @@ define([
       this.$el.empty()
         .append(
           $(document.createElement('span'))
-            .text(this.model.get('id')))
+            .text(this.model.get('id') + (!this.model.isSaved() ? ' *' : '')))
         .append(
           $(document.createElement('span'))
             .addClass('modified')

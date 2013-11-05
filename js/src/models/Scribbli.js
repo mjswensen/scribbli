@@ -10,6 +10,11 @@ define([
   var Scribbli = Backbone.Model.extend({
 
     initialize: function() {
+      this.set({
+        id: (new Date().getTime()).toString(36),
+        editables: new Editables(),
+        paths: new Paths()
+      });
       this.listen();
     },
 
@@ -17,12 +22,6 @@ define([
       this.stopListening();
       this.listenTo(this.get('editables'), 'change', Debounce(this.save, 375, this));
       this.listenTo(this.get('paths'), 'change', Debounce(this.save, 375, this));
-    },
-
-    defaults: {
-      id: (new Date().getTime()).toString(36),
-      editables: new Editables(),
-      paths: new Paths()
     },
 
     parse: function(data) {
@@ -36,8 +35,13 @@ define([
     },
 
     save: function() {
-      this.set({ modified: (new Date()).getTime() });
+      this.set({ modified: (new Date()).getTime() }, { silent: true });
       localStorage.setItem(this.get('id'), JSON.stringify(this.toJSON()));
+      this.trigger('change');// We need to trigger change after save so that list renders properly on new scribblies.
+    },
+
+    isSaved: function() {
+      return this.get('id') in localStorage;
     }
 
   });
