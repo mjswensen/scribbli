@@ -33,6 +33,11 @@ define([
         scribbliListView: new ScribbliListView({ app: this })
       });
       this.get('scribbliListView').render();
+
+      // Rerender the list to get updated modified timestamp.
+      this.listenTo(this.get('scribblies'), 'change', function() {
+        this.get('scribbliListView').render();
+      });
     },
 
     scribbliFromKey: function(key) {
