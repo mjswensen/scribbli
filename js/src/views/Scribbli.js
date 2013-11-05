@@ -16,17 +16,26 @@ define([
 
     initialize: function() {
       this.offset = this.$el.offset();
-      this.svg = this.$('svg');
-      this.setSvgViewbox();
-      // TODO: Call this.setSvgViewbox on window.resize
+      this.initializeSvg();
+      // TODO: Call this.initializeSvg on window.resize
     },
 
     render: function() {
+      // Remove previous elements
+      this.$el.empty();
+      // Replace SVG
+      this.$el.append(
+        $(document.createElementNS('http://www.w3.org/2000/svg', 'svg'))
+          .attr({
+            xmlns: 'http://www.w3.org/2000/svg',
+            version: '1.1'
+          }));
+      this.initializeSvg();
       // Render editables
       this.options.app.get('currentScribbli').get('editables').each(function(editable) {
         var view = new EditableView({ model: editable, parentView: this });
         editable.view = view;
-        view.render(this.$el);// TODO: use parentView instead? Yes.
+        view.render();
       }, this);
       // Render paths
       this.options.app.get('currentScribbli').get('paths').each(function(path) {
@@ -36,7 +45,8 @@ define([
       }, this);
     },
 
-    setSvgViewbox: function() {
+    initializeSvg: function() {
+      this.svg = this.$('svg');
       this.svg.attr('viewbox', '0 0 ' + this.svg.width() + ' ' + this.svg.height());
     },
 

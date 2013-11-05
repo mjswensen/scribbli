@@ -39,6 +39,12 @@ define([
       var scribbli = new Scribbli();
       scribbli.parse(JSON.parse(localStorage[key]));
       return scribbli;
+    },
+
+    chooseScribbli: function(scribbli) {
+      this.set({ currentScribbli: scribbli });
+      this.get('scribbliView').render();
+      this.get('scribbliListView').render();
     }
 
   });

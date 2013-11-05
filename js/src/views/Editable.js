@@ -22,7 +22,11 @@ define([
     },
 
     render: function() {
-      this.setCss();
+      this.setPosition();
+      this.setSize();
+      this.setRotation();
+      this.setFontSize();
+      this.setContent();
       this.options.parentView.$el.append(this.$el);
     },
 
@@ -54,11 +58,8 @@ define([
       });
     },
 
-    setCss: function() {
-      this.setPosition();
-      this.setSize();
-      this.setRotation();
-      this.setFontSize();
+    setContent: function() {
+      this.$el.html(this.model.get('content'));
     },
 
     events: {
