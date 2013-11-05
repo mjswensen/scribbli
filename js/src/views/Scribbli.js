@@ -19,18 +19,17 @@ define([
       this.svg = this.$('svg');
       this.setSvgViewbox();
       // TODO: Call this.setSvgViewbox on window.resize
-      this.model = new ScribbliModel();
     },
 
     render: function() {
       // Render editables
-      _.forEach(this.model.get('editables'), function(editable) {
+      this.options.app.get('currentScribbli').get('editables').each(function(editable) {
         var view = new EditableView({ model: editable, parentView: this });
         editable.view = view;
         view.render(this.$el);// TODO: use parentView instead? Yes.
       }, this);
       // Render paths
-      _.forEach(this.model.get('paths'), function(path) {
+      this.options.app.get('currentScribbli').get('paths').each(function(path) {
         var view = new PathView({ model: path, svg: this.$('svg').get(0) });
         path.view = view;
         view.render();
@@ -96,9 +95,9 @@ define([
         height: CONFIG.editableMinHeight
       });
       var view = new EditableView({ model: model, parentView: this });
-      view.render(this.$el);// TODO: use parentView insead?
+      view.render();
       model.view = view;
-      this.model.get('editables').add(model);
+      this.options.app.get('currentScribbli').get('editables').add(model);
       return model;
     },
 
@@ -111,7 +110,7 @@ define([
       });
       var view = new PathView({ model: model, svg: this.$('svg').get(0) });
       view.render();
-      this.model.get('paths').add(model);
+      this.options.app.get('currentScribbli').get('paths').add(model);
       return model;
     }
 

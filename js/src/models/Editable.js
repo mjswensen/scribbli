@@ -10,6 +10,7 @@ define([
     defaults: {
       rotation: 0,
       fontSize: 1,
+      fontFamily: 'hand',
       content: ''
     },
 

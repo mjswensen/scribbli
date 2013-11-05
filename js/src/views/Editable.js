@@ -21,9 +21,9 @@ define([
       this.listenTo(this.model, 'change:fontSize', this.setFontSize);
     },
 
-    render: function(parent) {
+    render: function() {
       this.setCss();
-      parent.append(this.$el);
+      this.options.parentView.$el.append(this.$el);
     },
 
     setPosition: function() {

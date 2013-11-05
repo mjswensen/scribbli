@@ -9,9 +9,6 @@ define([
 
     el: '#scribbli-list',
 
-    initialize: function() {
-    },
-
     render: function() {
       this.options.app.get('scribblies').each(function(scribbli) {
         var listItemView = new ScribbliListItem({ model: scribbli, parentView: this });

@@ -10,12 +10,17 @@ define([
   var Scribbli = Backbone.Model.extend({
 
     initialize: function() {
+      this.listen();
+    },
+
+    listen: function() {
+      this.stopListening();
       this.listenTo(this.get('editables'), 'change', Debounce(this.save, 375, this));
       this.listenTo(this.get('paths'), 'change', Debounce(this.save, 375, this));
     },
 
     defaults: {
-      id: Math.random().toString(36).substr(2,5),
+      id: (new Date().getTime()).toString(36),
       editables: new Editables(),
       paths: new Paths()
     },
@@ -27,6 +32,7 @@ define([
         editables: new Editables(data.editables),
         paths: new Paths(data.paths)
       });
+      this.listen();
     },
 
     save: function() {
