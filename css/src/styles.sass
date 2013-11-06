@@ -48,13 +48,14 @@ body
     max-height: 200px
     overflow-y: scroll
     .new-scribbli// TODO: a lot of duplicate styles here
-      padding: 10px//TODO: atomicize things like this
+      padding: 10px// TODO: atomicize things like this
       font-size: 0.75em
       background-color: transparentize($dark-gray, 0.75)
       color: $light-gray
       border: 2px dashed $dark-gray
       margin-bottom: 2px
       border-radius: 2px
+      -moz-transition: all 0.1s ease
       -webkit-transition: all 0.1s ease
       trasition: all 0.1s ease
       &:hover
@@ -68,6 +69,7 @@ body
       color: $light-gray
       margin-bottom: 2px
       border-radius: 2px
+      -moz-transition: all 0.1s ease
       -webkit-transition: all 0.1s ease
       trasition: all 0.1s ease
       &.selected
@@ -90,6 +92,7 @@ body
         float: right
         cursor: pointer
         margin-left: 4px
+        -moz-transition: all 0.1s ease
         -webkit-transition: all 0.1s ease
         trasition: all 0.1s ease
   footer
