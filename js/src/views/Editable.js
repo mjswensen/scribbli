@@ -126,6 +126,8 @@ define([
             });
             break;
         }
+      } else if(e.keyCode == KeyCodes.ESC) {
+        this.$el.blur();
       }
     },
 
