@@ -9,7 +9,7 @@ define([
   var Editable = Backbone.View.extend({
 
     tagName: 'div',
-    className: 'editable creating',
+    className: 'editable',
     attributes: {'contenteditable': true},
 
     initialize: function() {

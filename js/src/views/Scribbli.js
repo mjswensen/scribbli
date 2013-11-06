@@ -78,7 +78,7 @@ define([
     mouseupHandler: function(e) {
       this.captureEventState(e);
       if(this.editable) {
-        this.editable.view.$el.removeClass('creating').focus();
+        this.editable.view.$el.focus();
       }
       this.editable = null;
       this.path = null;
