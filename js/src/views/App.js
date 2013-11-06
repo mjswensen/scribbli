@@ -62,6 +62,23 @@ define([
       this.set({ currentScribbli: scribbli });
       this.get('scribbliView').render();
       this.get('scribbliListView').render();
+    },
+
+    deleteScribbli: function(scribbli) {
+      var newScribbli;
+      this.get('scribblies').remove(scribbli);
+      if(scribbli == this.get('currentScribbli')) {
+        if(this.get('scribblies').length) {
+          this.set({ currentScribbli: this.get('scribblies').at(0) });
+        } else {
+          newScribbli = new Scribbli();
+          this.get('scribblies').add(newScribbli);
+          this.set({ currentScribbli: newScribbli });
+        }
+      }
+      scribbli.remove();
+      this.get('scribbliView').render();
+      this.get('scribbliListView').render();
     }
 
   });

@@ -17,6 +17,10 @@ define([
             .text(this.model.get('id') + (!this.model.isSaved() ? ' *' : '')))
         .append(
           $(document.createElement('span'))
+            .addClass('delete')
+            .html('&times;'))
+        .append(
+          $(document.createElement('span'))
             .addClass('modified')
             .text(moment(this.model.get('modified')).calendar()));
       if(this.model == this.options.parentView.options.app.get('currentScribbli')) {
@@ -26,11 +30,17 @@ define([
     },
 
     events: {
-      'click': 'chooseScribbli'
+      'click': 'chooseScribbli',
+      'click .delete': 'deleteScribbli'
     },
 
     chooseScribbli: function() {
       this.options.parentView.options.app.chooseScribbli(this.model);
+    },
+
+    deleteScribbli: function(e) {
+      e.stopPropagation();
+      this.options.parentView.options.app.deleteScribbli(this.model);
     }
 
   });

@@ -42,6 +42,10 @@ define([
 
     isSaved: function() {
       return this.get('id') in localStorage;
+    },
+
+    remove: function() {
+      localStorage.removeItem(this.get('id'));
     }
 
   });

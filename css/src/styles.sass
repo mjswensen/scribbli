@@ -77,10 +77,21 @@ body
         cursor: pointer
         background-color: $light-gray
         color: $dark-gray
+      &:hover
+        .delete
+          width: 6px
       .modified
         float: right
         text-transform: uppercase
         opacity: 0.5
+      .delete
+        width: 0
+        overflow: hidden
+        float: right
+        cursor: pointer
+        margin-left: 4px
+        -webkit-transition: all 0.1s ease
+        trasition: all 0.1s ease
   footer
     @include roboto
     font-size: 0.75em
