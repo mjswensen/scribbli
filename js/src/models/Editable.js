@@ -2,15 +2,19 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'config'
-], function($, _, Backbone, CONFIG) {
+  'config',
+  'utils/fonts'
+], function($, _, Backbone, CONFIG, Fonts) {
 
   var Editable = Backbone.Model.extend({
 
     defaults: {
       rotation: 0,
       fontSize: 1,
-      content: ''
+      content: '',
+      font: Fonts.getDefault(),
+      bold: false,
+      italic: false
     },
 
     updateSize: function(x, y) {

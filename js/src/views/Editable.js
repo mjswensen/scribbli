@@ -3,8 +3,9 @@ define([
   'underscore',
   'backbone',
   'config',
-  'utils/KeyCodes'
-], function($, _, Backbone, CONFIG, KeyCodes) {
+  'utils/KeyCodes',
+  'utils/Fonts'
+], function($, _, Backbone, CONFIG, KeyCodes, Fonts) {
 
   var Editable = Backbone.View.extend({
 
@@ -19,6 +20,9 @@ define([
       this.listenTo(this.model, 'change:height', this.setSize);
       this.listenTo(this.model, 'change:rotation', this.setRotation);
       this.listenTo(this.model, 'change:fontSize', this.setFontSize);
+      this.listenTo(this.model, 'change:font', this.setFont);
+      this.listenTo(this.model, 'change:bold', this.setBold);
+      this.listenTo(this.model, 'change:italic', this.setItalic);
     },
 
     render: function() {
@@ -27,6 +31,9 @@ define([
       this.setRotation();
       this.setFontSize();
       this.setContent();
+      this.setFont();
+      this.setBold();
+      this.setItalic();
       this.options.parentView.$el.append(this.$el);
     },
 
@@ -60,6 +67,20 @@ define([
 
     setContent: function() {
       this.$el.html(this.model.get('content'));
+    },
+
+    setFont: function() {
+      this.$el
+        .removeClass(Fonts.getAll())
+        .addClass(this.model.get('font'));
+    },
+
+    setBold: function() {
+      this.$el.toggleClass('bold', this.model.get('bold'));
+    },
+
+    setItalic: function() {
+      this.$el.toggleClass('italic', this.model.get('italic'));
     },
 
     events: {
@@ -114,17 +135,35 @@ define([
 
     keydownHandler: function(e) {
       if(e.ctrlKey) {
-        switch(e.keyCode) {
-          case KeyCodes.R:
+        if(e.altKey) {
+          if(e.keyCode == KeyCodes.F) {
             this.model.set({
-              rotation: this.model.get('rotation') + 15 * (e.shiftKey ? -1 : 1)
+              font: Fonts.getNext(this.model.get('font'))
             });
-            break;
-          case KeyCodes.F:
-            this.model.set({
-              fontSize: this.model.get('fontSize') * (e.shiftKey ? 0.75 : 1/0.75)
-            });
-            break;
+          }
+        } else {
+          switch(e.keyCode) {
+            case KeyCodes.R:
+              this.model.set({
+                rotation: this.model.get('rotation') + 15 * (e.shiftKey ? -1 : 1)
+              });
+              break;
+            case KeyCodes.F:
+              this.model.set({
+                fontSize: this.model.get('fontSize') * (e.shiftKey ? 0.75 : 1/0.75)
+              });
+              break;
+            case KeyCodes.B:
+              e.preventDefault();
+              this.model.set({
+                bold: !this.model.get('bold')
+              });
+              break;
+            case KeyCodes.I:
+              this.model.set({
+                italic: !this.model.get('italic')
+              });
+          }
         }
       } else if(e.keyCode == KeyCodes.ESC) {
         this.$el.blur();

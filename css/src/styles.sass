@@ -21,6 +21,11 @@ body
     h1
       @include euphoria
       text-align: center
+      cursor: default
+      -ms-user-select: none
+      -moz-user-select: none
+      -webkit-user-select: none
+      user-select: none
       color: $yellow// Fallback
       background: -webkit-linear-gradient(lighten($yellow, 20%), $yellow)
       -webkit-background-clip: text
@@ -120,7 +125,6 @@ body
   left: 0
   background-color: $light-gray
   color: $dark-gray
-  @include daniel
   .editable
     position: absolute
     -moz-transition: -moz-transform 0.2s ease, font-size 0.2s ease
@@ -129,6 +133,18 @@ body
     &:focus
       outline: 0
       background-color: transparentize($yellow, 0.9)
+    &.hand
+      font-family: "Daniel"
+    &.mono
+      font-family: "Tex Gyre Cursor"
+    &.sans
+      font-family: "Gandhi Sans"
+    &.serif
+      font-family: "Vollkorn"
+    &.bold
+      font-weight: bold
+    &.italic
+      font-style: italic
   svg
     position: absolute
     width: 100%
