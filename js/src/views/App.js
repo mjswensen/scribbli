@@ -15,10 +15,14 @@ define([
     },
 
     initialize: function() {
-      var key;
+      var key,
+        localData;
 
       for(key in localStorage) {
-        this.get('scribblies').unshift(this.scribbliFromKey(key));
+        localData = JSON.parse(localStorage[key]);
+        if(Scribbli.isScribbliData(localData)) {
+          this.get('scribblies').unshift((new Scribbli()).parse(localData));
+        }
       }
 
       if(!this.get('scribblies').length) {
@@ -42,12 +46,6 @@ define([
       this.listenTo(this.get('scribblies'), 'change', function() {
         this.get('scribbliListView').render();
       });
-    },
-
-    scribbliFromKey: function(key) {
-      var scribbli = new Scribbli();
-      scribbli.parse(JSON.parse(localStorage[key]));
-      return scribbli;
     },
 
     chooseScribbli: function(scribbli) {

@@ -32,6 +32,7 @@ define([
         paths: new Paths(data.paths)
       });
       this.listen();
+      return this;
     },
 
     save: function() {
@@ -46,6 +47,12 @@ define([
 
     remove: function() {
       localStorage.removeItem(this.get('id'));
+    }
+
+  }, {
+
+    isScribbliData: function(data) {
+      return !!data && !!data.id && !!data.modified && !!data.editables && !!data.paths;
     }
 
   });

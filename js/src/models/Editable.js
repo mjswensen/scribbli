@@ -3,7 +3,7 @@ define([
   'underscore',
   'backbone',
   'config',
-  'utils/fonts'
+  'utils/Fonts'
 ], function($, _, Backbone, CONFIG, Fonts) {
 
   var Editable = Backbone.Model.extend({
