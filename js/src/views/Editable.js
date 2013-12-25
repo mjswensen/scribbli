@@ -23,6 +23,7 @@ define([
       this.listenTo(this.model, 'change:font', this.setFont);
       this.listenTo(this.model, 'change:bold', this.setBold);
       this.listenTo(this.model, 'change:italic', this.setItalic);
+      this.listenTo(this.model, 'change:underline', this.setUnderline);
     },
 
     render: function() {
@@ -34,6 +35,7 @@ define([
       this.setFont();
       this.setBold();
       this.setItalic();
+      this.setUnderline();
       this.options.parentView.$el.append(this.$el);
     },
 
@@ -81,6 +83,10 @@ define([
 
     setItalic: function() {
       this.$el.toggleClass('italic', this.model.get('italic'));
+    },
+
+    setUnderline: function() {
+      this.$el.toggleClass('underline', this.model.get('underline'));
     },
 
     events: {
@@ -163,6 +169,12 @@ define([
               this.model.set({
                 italic: !this.model.get('italic')
               });
+              break;
+            case KeyCodes.U:
+              this.model.set({
+                underline: !this.model.get('underline')
+              });
+              break;
           }
         }
       } else if(e.keyCode == KeyCodes.ESC) {

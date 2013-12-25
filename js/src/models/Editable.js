@@ -14,7 +14,8 @@ define([
       content: '',
       font: Fonts.getDefault(),
       bold: false,
-      italic: false
+      italic: false,
+      underline: false
     },
 
     updateSize: function(x, y) {
