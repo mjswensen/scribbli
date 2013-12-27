@@ -62,7 +62,7 @@ body
       border-radius: 2px
       -moz-transition: all 0.1s ease
       -webkit-transition: all 0.1s ease
-      trasition: all 0.1s ease
+      transition: all 0.1s ease
       &:hover
         cursor: pointer
         border-color: $light-gray
@@ -76,7 +76,7 @@ body
       border-radius: 2px
       -moz-transition: all 0.1s ease
       -webkit-transition: all 0.1s ease
-      trasition: all 0.1s ease
+      transition: all 0.1s ease
       &.selected
         background-color: $yellow
         color: $dark-gray
@@ -90,6 +90,11 @@ body
       .modified
         float: right
         text-transform: uppercase
+        -ms-user-select: none
+        -moz-user-select: none
+        -webkit-user-select: none
+        user-select: none
+        cursor: default
         opacity: 0.5
       .delete
         width: 0
@@ -99,7 +104,7 @@ body
         margin-left: 4px
         -moz-transition: all 0.1s ease
         -webkit-transition: all 0.1s ease
-        trasition: all 0.1s ease
+        transition: all 0.1s ease
   footer
     @include roboto
     font-size: 0.75em
@@ -112,10 +117,76 @@ body
     background-color: $lighter-blue
     a
       text-decoration: none
-      &:link, &:visited
+      cursor: pointer
+      &, &:link, &:visited
         color: $dark-gray
       &:hover, &:active
         color: lighten($dark-gray, 20%)
+
+#about-dialog-wrapper
+  display: none
+  .overlay
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background-color: $overlay
+  .content
+    @include roboto
+    box-sizing: border-box
+    position: absolute
+    top: 15%
+    left: 30%
+    width: 40%
+    padding: 1em
+    border-radius: 2px
+    background-color: $dark-gray
+    color: $light-gray
+    .close
+      float: right
+      cursor: pointer
+      border-radius: 50%
+      width: 20px
+      height: 20px
+      text-align: center
+      &:hover, &:active
+        color: white
+        background-color: transparentize($light-gray, 0.85)
+    h2
+      font-size: 2em
+      margin-bottom: 1rem
+      color: $yellow
+    p
+      margin-bottom: 1em
+      &:last-child
+        margin-bottom: 0
+    a
+      -moz-transition: all 0.1s ease
+      -webkit-transition: all 0.1s ease
+      transition: all 0.1s ease
+      text-decoration: none
+      &:link, &:visited
+        color: lighten($lighter-blue, 20%)
+      &:hover, &:active
+        color: lighten($lighter-blue, 30%)
+    .font-credits
+      margin-bottom: 1em
+      li
+        margin-bottom: 0.5em
+        &:last-child
+          margin-bottom: 0
+        .font-credit
+          &.hand
+            font-family: "Daniel"
+          &.mono
+            font-family: "Tex Gyre Cursor"
+          &.sans
+            font-family: "Gandhi Sans"
+          &.serif
+            font-family: "Vollkorn"
+          &.script
+            @include euphoria
 
 #scribbli
   position: absolute

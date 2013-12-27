@@ -5,8 +5,9 @@ define([
   'models/Scribbli',
   'collections/Scribblies',
   'views/Scribbli',
-  'views/ScribbliList'
-], function($, _, Backbone, Scribbli, Scribblies, ScribbliView, ScribbliListView) {
+  'views/ScribbliList',
+  'views/About'
+], function($, _, Backbone, Scribbli, Scribblies, ScribbliView, ScribbliListView, About) {
 
   var App = Backbone.Model.extend({
 
@@ -46,6 +47,9 @@ define([
       this.listenTo(this.get('scribblies'), 'change', function() {
         this.get('scribbliListView').render();
       });
+
+      // Initialize the about modal dialog
+      new About();
     },
 
     chooseScribbli: function(scribbli) {
