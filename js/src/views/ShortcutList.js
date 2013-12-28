@@ -55,13 +55,13 @@ define([
     },
 
     render: function() {
-      this.scribbliList = $(document.createElement('ol')).attr('id', 'shortcut-list');
-      this.$el.append(this.scribbliList);
+      this.shortcutList = $(document.createElement('ol')).attr('id', 'shortcut-list');
+      this.$el.append(this.shortcutList);
       _.each(this.shortcuts, function(shortcut) {
         var combination = (_.map(shortcut.keys, function(key) { return '<span class="key">' + key + '</span>'; }) || [])
           .concat(shortcut.actions || [])
           .join(' + ');
-        this.scribbliList.append(
+        this.shortcutList.append(
           $(document.createElement('li')).addClass('shortcut')
             .append(
               $(document.createElement('span')).addClass('combination').append(combination))
@@ -87,10 +87,21 @@ define([
     },
 
     setShortcutListHeight: function() {
+      var list = this.shortcutList,
+        duration = 1000;
       if(this.collapsed) {
-        this.scribbliList.css('height', this.$('.shortcut').first().outerHeight(true) * _.where(this.shortcuts, {alwaysShown: true}).length);
+        list.css({
+          height: this.$('.shortcut').first().outerHeight(true) * _.where(this.shortcuts, {alwaysShown: true}).length,
+          overflow: 'hidden'
+        }).scrollTop(0);
       } else {
-        this.scribbliList.css('height', '');
+        list.css('height', '');
+        if(list.height() > this.options.parentView.$el.height() / 2) {
+          list.css({
+            height: this.options.parentView.$el.height() / 2,
+            overflow: 'scroll'
+          });
+        }
       }
     }
 
