@@ -26,6 +26,10 @@ define([
 
     newScribbli: function() {
       this.options.app.newScribbli();
+    },
+
+    setMaxHeight: function(maxHeight) {
+      this.$el.css('max-height', maxHeight);
     }
 
   });

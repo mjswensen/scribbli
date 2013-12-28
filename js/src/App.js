@@ -5,9 +5,9 @@ define([
   'models/Scribbli',
   'collections/Scribblies',
   'views/Scribbli',
-  'views/ScribbliList',
+  'views/Sidebar',
   'views/About'
-], function($, _, Backbone, Scribbli, Scribblies, ScribbliView, ScribbliListView, About) {
+], function($, _, Backbone, Scribbli, Scribblies, ScribbliView, SidebarView, About) {
 
   var App = Backbone.Model.extend({
 
@@ -39,13 +39,13 @@ define([
       this.get('scribbliView').render();
 
       this.set({
-        scribbliListView: new ScribbliListView({ app: this })
+        sidebarView: new SidebarView({ app: this })
       });
-      this.get('scribbliListView').render();
+      this.get('sidebarView').render();
 
       // Rerender the list to get updated modified timestamp.
       this.listenTo(this.get('scribblies'), 'change', function() {
-        this.get('scribbliListView').render();
+        this.get('sidebarView').scribbliList.render();
       });
 
       // Initialize the about modal dialog
@@ -55,7 +55,7 @@ define([
     chooseScribbli: function(scribbli) {
       this.set({ currentScribbli: scribbli });
       this.get('scribbliView').render();
-      this.get('scribbliListView').render();
+      this.get('sidebarView').scribbliList.render();
     },
 
     newScribbli: function() {
@@ -63,7 +63,7 @@ define([
       this.get('scribblies').unshift(scribbli);
       this.set({ currentScribbli: scribbli });
       this.get('scribbliView').render();
-      this.get('scribbliListView').render();
+      this.get('sidebarView').scribbliList.render();
     },
 
     deleteScribbli: function(scribbli) {
@@ -80,7 +80,7 @@ define([
       }
       scribbli.remove();
       this.get('scribbliView').render();
-      this.get('scribbliListView').render();
+      this.get('sidebarView').scribbliList.render();
     }
 
   });
