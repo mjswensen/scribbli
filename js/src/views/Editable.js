@@ -145,6 +145,9 @@ define([
         }
       } else if(e.keyCode == KeyCodes.ESC) {
         this.$el.blur();
+      } else if(e.keyCode == KeyCodes.TAB) {
+        e.preventDefault();
+        this.insertText('\u00A0\u00A0');
       }
     },
 
@@ -166,6 +169,20 @@ define([
         x: e.pageX - this.moveOffsetX,
         y: e.pageY - this.moveOffsetY
       });
+    },
+
+    insertText: function(text) {
+      var sel, range;
+      if (window.getSelection) {
+          sel = window.getSelection();
+          if (sel.getRangeAt && sel.rangeCount) {
+              range = sel.getRangeAt(0);
+              range.deleteContents();
+              range.insertNode( document.createTextNode(text) );
+          }
+      } else if (document.selection && document.selection.createRange) {
+          document.selection.createRange().text = text;
+      }
     }
 
   });
