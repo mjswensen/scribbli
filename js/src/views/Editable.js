@@ -21,9 +21,6 @@ define([
       this.listenTo(this.model, 'change:rotation', this.setRotation);
       this.listenTo(this.model, 'change:fontSize', this.setFontSize);
       this.listenTo(this.model, 'change:font', this.setFont);
-      this.listenTo(this.model, 'change:bold', this.setBold);
-      this.listenTo(this.model, 'change:italic', this.setItalic);
-      this.listenTo(this.model, 'change:underline', this.setUnderline);
     },
 
     render: function() {
@@ -33,9 +30,6 @@ define([
       this.setFontSize();
       this.setContent();
       this.setFont();
-      this.setBold();
-      this.setItalic();
-      this.setUnderline();
       this.options.parentView.$el.append(this.$el);
     },
 
@@ -75,18 +69,6 @@ define([
       this.$el
         .removeClass(Fonts.getAll())
         .addClass(this.model.get('font'));
-    },
-
-    setBold: function() {
-      this.$el.toggleClass('bold', this.model.get('bold'));
-    },
-
-    setItalic: function() {
-      this.$el.toggleClass('italic', this.model.get('italic'));
-    },
-
-    setUnderline: function() {
-      this.$el.toggleClass('underline', this.model.get('underline'));
     },
 
     events: {
@@ -157,22 +139,6 @@ define([
             case KeyCodes.F:
               this.model.set({
                 fontSize: this.model.get('fontSize') * (e.shiftKey ? 0.75 : 1/0.75)
-              });
-              break;
-            case KeyCodes.B:
-              e.preventDefault();
-              this.model.set({
-                bold: !this.model.get('bold')
-              });
-              break;
-            case KeyCodes.I:
-              this.model.set({
-                italic: !this.model.get('italic')
-              });
-              break;
-            case KeyCodes.U:
-              this.model.set({
-                underline: !this.model.get('underline')
               });
               break;
           }

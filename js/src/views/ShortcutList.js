@@ -38,15 +38,6 @@ define([
       }, {
         keys: ['shift', 'ctrl', 'R'],
         desc: 'Rotate note -15&deg;'
-      }, {
-        keys: ['ctrl', 'B'],
-        desc: 'Toggle note bold'
-      }, {
-        keys: ['ctrl', 'I'],
-        desc: 'Toggle note italic'
-      }, {
-        keys: ['ctrl', 'U'],
-        desc: 'Toggle note underline'
       }
     ],
 
